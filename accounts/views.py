@@ -8,7 +8,7 @@ from jobs.models import JobPosting
 from applications.models import Application
 
 
-ddef login_view(request):
+def login_view(request):
 
     error = None
 
@@ -29,13 +29,14 @@ ddef login_view(request):
                 login(request, user)
                 return redirect('home')
             else:
-                error = "Invalid credentials"
+                error = "Invalid username or password"
 
         else:
             error = "Please fill all fields"
 
     return render(request, 'accounts/login.html', {'error': error})
-    
+
+
 @login_required
 def home(request):
 

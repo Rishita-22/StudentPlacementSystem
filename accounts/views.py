@@ -10,7 +10,7 @@ def login_view(request):
     if not User.objects.filter(username="admin").exists():
         User.objects.create_superuser(
             username="admin",
-            password="admin123"
+            password="admin121314"
         )
 
     create_default_user()  # TEMP ONLY FOR RENDER DEBUG

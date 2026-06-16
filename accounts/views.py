@@ -8,26 +8,34 @@ from jobs.models import JobPosting
 from applications.models import Application
 
 
-def login_view(request):
+ddef login_view(request):
+
+    error = None
 
     if request.method == 'POST':
 
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(
-            request,
-            username=username,
-            password=password
-        )
+        if username and password:
 
-        if user is not None:
-            login(request, user)
-            return redirect('home')
+            user = authenticate(
+                request,
+                username=username,
+                password=password
+            )
 
-    return render(request, 'accounts/login.html')
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                error = "Invalid credentials"
 
+        else:
+            error = "Please fill all fields"
 
+    return render(request, 'accounts/login.html', {'error': error})
+    
 @login_required
 def home(request):
 

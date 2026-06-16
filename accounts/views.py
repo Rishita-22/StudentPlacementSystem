@@ -8,6 +8,9 @@ from jobs.models import JobPosting
 from applications.models import Application
 
 
+# =========================
+# LOGIN VIEW (SAFE)
+# =========================
 def login_view(request):
 
     error = None
@@ -17,6 +20,7 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        # Basic validation
         if username and password:
 
             user = authenticate(
@@ -37,6 +41,9 @@ def login_view(request):
     return render(request, 'accounts/login.html', {'error': error})
 
 
+# =========================
+# DASHBOARD (HOME)
+# =========================
 @login_required
 def home(request):
 
@@ -58,6 +65,9 @@ def home(request):
     return render(request, 'accounts/home.html', context)
 
 
+# =========================
+# LOGOUT
+# =========================
 def logout_view(request):
     logout(request)
     return redirect('login')

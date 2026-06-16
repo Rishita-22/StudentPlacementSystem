@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="page-title">Dashboard Overview</h2>
+
+<div class="dashboard-grid">
+
+    <div class="card students">
+        <h3>Students</h3>
+        <p>{{ total_students }}</p>
+    </div>
+
+    <div class="card companies">
+        <h3>Companies</h3>
+        <p>{{ total_companies }}</p>
+    </div>
+
+    <div class="card jobs">
+        <h3>Jobs</h3>
+        <p>{{ total_jobs }}</p>
+    </div>
+
+    <div class="card applications">
+        <h3>Applications</h3>
+        <p>{{ total_applications }}</p>
+    </div>
+
+    <div class="card selected">
+        <h3>Selected</h3>
+        <p>{{ selected_students }}</p>
+    </div>
+
+</div>
+
+{% endblock %}

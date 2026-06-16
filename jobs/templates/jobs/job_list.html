@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Job Postings</h2>
+
+<a href="{% url 'add_job' %}">
+    Add Job
+</a>
+
+<br><br>
+
+<form method="GET">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search job title or company">
+
+    <button type="submit">
+
+        Search
+
+    </button>
+
+</form>
+
+<br>
+
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Company</th>
+    <th>Title</th>
+    <th>Deadline</th>
+    <th>Edit</th>
+    <th>Delete</th>
+</tr>
+
+{% for job in jobs %}
+
+<tr>
+
+    <td>{{ job.id }}</td>
+
+    <td>{{ job.company }}</td>
+
+    <td>{{ job.title }}</td>
+
+    <td>{{ job.deadline }}</td>
+
+    <td>
+
+        <a href="{% url 'edit_job' job.id %}">
+        Edit
+        </a>
+
+    </td>
+
+    <td>
+
+        <a href="{% url 'delete_job' job.id %}">
+        Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

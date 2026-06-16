@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+
+<head>
+
+    <title>
+
+        Student Placement Management System
+
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<h1>
+
+    Student Placement Management System
+
+</h1>
+
+{% if request.user.is_authenticated %}
+
+    {% include 'navbar.html' %}
+
+{% endif %}
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <p class="message">
+
+            {{ message }}
+
+        </p>
+
+    {% endfor %}
+
+{% endif %}
+
+{% block content %}
+
+{% endblock %}
+
+</body>
+
+</html>

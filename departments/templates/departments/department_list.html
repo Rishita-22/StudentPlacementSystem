@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Departments</h2>
+
+<a href="{% url 'add_department' %}">
+    Add Department
+</a>
+
+<br><br>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Department</th>
+    <th>Delete</th>
+</tr>
+
+{% for department in departments %}
+
+<tr>
+
+    <td>{{ department.id }}</td>
+
+    <td>{{ department.department_name }}</td>
+
+    <td>
+
+        <a href="{% url 'delete_department' department.id %}">
+            Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

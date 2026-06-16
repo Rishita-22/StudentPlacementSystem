@@ -1,0 +1,12 @@
+from django.contrib import admin
+from .models import Department
+
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+
+    list_display = ['id', 'department_name']
+
+    search_fields = ['department_name']
+
+    ordering = ['department_name']

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Students</h2>
+
+<form method="GET">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search student name">
+
+    <select name="department">
+
+        <option value="">
+
+            All Departments
+
+        </option>
+
+        {% for department in departments %}
+
+        <option value="{{ department.id }}">
+
+            {{ department.department_name }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <button type="submit">
+
+        Search
+
+    </button>
+
+</form>
+
+<br>
+
+<a href="{% url 'add_student' %}">
+    Add Student
+</a>
+
+<br><br>
+
+<table>
+
+<tr>
+
+    <th>Name</th>
+    <th>Roll Number</th>
+    <th>Department</th>
+    <th>Semester</th>
+    <th>CGPA</th>
+    <th>Edit</th>
+    <th>Delete</th>
+
+</tr>
+
+{% for student in students %}
+
+<tr>
+
+    <td>{{ student.name }}</td>
+
+    <td>{{ student.roll_number }}</td>
+
+    <td>{{ student.department }}</td>
+
+    <td>{{ student.semester }}</td>
+
+    <td>{{ student.cgpa }}</td>
+
+    <td>
+
+        <a href="{% url 'edit_student' student.id %}">
+        Edit
+        </a>
+
+    </td>
+
+    <td>
+
+        <a href="{% url 'delete_student' student.id %}">
+        Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="pagination">
+
+    {% if students.has_previous %}
+        <a href="?page={{ students.previous_page_number }}&q={{ request.GET.q }}&department={{ request.GET.department }}">
+            ⬅ Previous
+        </a>
+    {% endif %}
+
+    <span>
+        Page {{ students.number }} of {{ students.paginator.num_pages }}
+    </span>
+
+    {% if students.has_next %}
+        <a href="?page={{ students.next_page_number }}&q={{ request.GET.q }}&department={{ request.GET.department }}">
+            Next ➡
+        </a>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

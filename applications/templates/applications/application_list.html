@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Applications</h2>
+
+<a href="{% url 'add_application' %}">
+    Apply For Job
+</a>
+
+<br><br>
+
+<form method="GET">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search student name">
+
+    <select name="status">
+
+        <option value="">
+
+            All Status
+
+        </option>
+
+        <option value="Applied">
+
+            Applied
+
+        </option>
+
+        <option value="Shortlisted">
+
+            Shortlisted
+
+        </option>
+
+        <option value="Selected">
+
+            Selected
+
+        </option>
+
+        <option value="Rejected">
+
+            Rejected
+
+        </option>
+
+    </select>
+
+    <button type="submit">
+
+        Search
+
+    </button>
+
+</form>
+
+<br>
+
+<table>
+
+<tr>
+
+    <th>Student</th>
+    <th>Job</th>
+    <th>Status</th>
+    <th>Applied Date</th>
+    <th>Delete</th>
+
+</tr>
+
+{% for application in applications %}
+
+<tr>
+
+    <td>{{ application.student }}</td>
+
+    <td>{{ application.job }}</td>
+
+    <td>{{ application.status }}</td>
+
+    <td>{{ application.applied_date }}</td>
+
+    <td>
+
+        <a href="{% url 'delete_application' application.id %}">
+            Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

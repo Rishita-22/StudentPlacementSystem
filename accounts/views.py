@@ -1,24 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+
+from students.models import Student
+from companies.models import Company
+from jobs.models import JobPosting
+from applications.models import Application
 
 
 def login_view(request):
 
-    def create_default_user():
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser(
-            username="admin",
-            password="admin121314"
-        )
-
-    create_default_user()  # TEMP ONLY FOR RENDER DEBUG
-
     if request.method == 'POST':
 
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         user = authenticate(
             request,
@@ -28,9 +23,30 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return redirect('home')
 
     return render(request, 'accounts/login.html')
+
+
+@login_required
+def home(request):
+
+    total_students = Student.objects.count()
+    total_companies = Company.objects.count()
+    total_jobs = JobPosting.objects.count()
+    total_applications = Application.objects.count()
+
+    selected_students = Application.objects.filter(status='Selected').count()
+
+    context = {
+        'total_students': total_students,
+        'total_companies': total_companies,
+        'total_jobs': total_jobs,
+        'total_applications': total_applications,
+        'selected_students': selected_students
+    }
+
+    return render(request, 'accounts/home.html', context)
 
 
 def logout_view(request):

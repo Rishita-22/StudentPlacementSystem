@@ -9,6 +9,9 @@ from .forms import DepartmentForm
 @login_required
 def department_list(request):
 
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
     departments = Department.objects.all()
 
     return render(
@@ -22,6 +25,9 @@ def department_list(request):
 
 @login_required
 def add_department(request):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     if request.method == 'POST':
 
@@ -53,6 +59,9 @@ def add_department(request):
 
 @login_required
 def edit_department(request, id):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     department = Department.objects.get(id=id)
 
@@ -91,6 +100,9 @@ def edit_department(request, id):
 
 @login_required
 def delete_department(request, id):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     department = Department.objects.get(id=id)
 

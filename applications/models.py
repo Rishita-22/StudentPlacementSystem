@@ -1,5 +1,5 @@
 from django.db import models
-from students.models import Student
+from students.models import StudentProfile
 from jobs.models import JobPosting
 
 
@@ -13,7 +13,7 @@ class Application(models.Model):
     ]
 
     student = models.ForeignKey(
-        Student,
+        StudentProfile,
         on_delete=models.CASCADE
     )
 
@@ -33,7 +33,8 @@ class Application(models.Model):
     )
 
     def __str__(self):
-        return f"{self.student.name} - {self.job.title}"
+
+        return f"{self.student.user.username} - {self.job.title}"
 
     class Meta:
         verbose_name_plural = "Applications"

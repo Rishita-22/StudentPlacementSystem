@@ -27,4 +27,22 @@ urlpatterns = [
         name='delete_application'
     ),
 
+    path(
+        'apply/<int:job_id>/',
+        views.apply_job,
+        name='apply_job'
+    ),
+
+    path(
+        'my/',
+        views.my_applications,
+        name='my_applications'
+    ),
+
+    path(
+        'status/<int:id>/<str:status>/',
+        views.update_application_status,
+        name='update_application_status'
+    ),
+
 ]

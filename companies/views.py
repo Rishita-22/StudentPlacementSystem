@@ -9,6 +9,9 @@ from .forms import CompanyForm
 @login_required
 def company_list(request):
 
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
     q = request.GET.get('q')
 
     companies = Company.objects.all()
@@ -30,6 +33,9 @@ def company_list(request):
 
 @login_required
 def add_company(request):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     if request.method == 'POST':
 
@@ -61,6 +67,9 @@ def add_company(request):
 
 @login_required
 def edit_company(request, id):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     company = Company.objects.get(id=id)
 
@@ -99,6 +108,9 @@ def edit_company(request, id):
 
 @login_required
 def delete_company(request, id):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     company = Company.objects.get(id=id)
 

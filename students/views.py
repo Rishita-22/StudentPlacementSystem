@@ -10,6 +10,9 @@ from departments.models import Department
 @login_required
 def student_list(request):
 
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
     q = request.GET.get('q')
     department_id = request.GET.get('department')
 
@@ -46,6 +49,9 @@ def student_list(request):
 @login_required
 def add_student(request):
 
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
     if request.method == 'POST':
 
         form = StudentForm(request.POST)
@@ -75,6 +81,9 @@ def add_student(request):
 
 @login_required
 def edit_student(request, id):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     student = Student.objects.get(id=id)
 
@@ -111,6 +120,9 @@ def edit_student(request, id):
 
 @login_required
 def delete_student(request, id):
+
+    if not request.user.is_staff:
+        return redirect('dashboard')
 
     student = Student.objects.get(id=id)
 

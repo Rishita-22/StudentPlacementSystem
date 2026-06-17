@@ -4,57 +4,31 @@
 
 <h2>Applications</h2>
 
-<a href="{% url 'add_application' %}">
-    Apply For Job
-</a>
-
-<br><br>
+<br>
 
 <form method="GET">
 
     <input
         type="text"
         name="q"
-        placeholder="Search student name">
+        placeholder="Search username">
 
     <select name="status">
 
-        <option value="">
+        <option value="">All Status</option>
 
-            All Status
+        <option value="Applied">Applied</option>
 
-        </option>
+        <option value="Shortlisted">Shortlisted</option>
 
-        <option value="Applied">
+        <option value="Selected">Selected</option>
 
-            Applied
-
-        </option>
-
-        <option value="Shortlisted">
-
-            Shortlisted
-
-        </option>
-
-        <option value="Selected">
-
-            Selected
-
-        </option>
-
-        <option value="Rejected">
-
-            Rejected
-
-        </option>
+        <option value="Rejected">Rejected</option>
 
     </select>
 
     <button type="submit">
-
         Search
-
     </button>
 
 </form>
@@ -64,11 +38,13 @@
 <table>
 
 <tr>
-
+    
     <th>Student</th>
     <th>Job</th>
     <th>Status</th>
     <th>Applied Date</th>
+    <th>Change Status</th>
+    <th>Edit</th>
     <th>Delete</th>
 
 </tr>
@@ -77,22 +53,66 @@
 
 <tr>
 
-    <td>{{ application.student }}</td>
+    <td>
+        {{ application.student.user.username }}
+    </td>
 
-    <td>{{ application.job }}</td>
+    <td>
+        {{ application.job.title }}
+    </td>
 
-    <td>{{ application.status }}</td>
+    <td>
+        {{ application.status }}
+    </td>
 
-    <td>{{ application.applied_date }}</td>
+    <td>
+        {{ application.applied_date }}
+    </td>
+
+    {% if request.user.is_staff %}
 
     <td>
 
-        <a href="{% url 'delete_application' application.id %}">
-            Delete
+        <a href="{% url 'update_application_status' application.id 'Shortlisted' %}">
+            Shortlist
+        </a>
+
+        |
+
+        <a href="{% url 'update_application_status' application.id 'Selected' %}">
+            Select
+        </a>
+
+        |
+
+        <a href="{% url 'update_application_status' application.id 'Rejected' %}">
+            Reject
         </a>
 
     </td>
 
+    {% endif %}
+
+    <td>
+        <a href="{% url 'edit_application' application.id %}">
+            Edit
+        </a>
+    </td>
+
+    <td>
+        <a href="{% url 'delete_application' application.id %}">
+            Delete
+        </a>
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+    <td colspan="6">
+        No applications found.
+    </td>
 </tr>
 
 {% endfor %}

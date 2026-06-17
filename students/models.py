@@ -1,5 +1,6 @@
 from django.db import models
 from departments.models import Department
+from django.contrib.auth.models import User
 
 
 class Student(models.Model):
@@ -40,3 +41,38 @@ class Student(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.roll_number})"
+
+class StudentProfile(models.Model):
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    roll_number = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    department = models.ForeignKey(
+        'departments.Department',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    semester = models.IntegerField(
+        null=True,
+        blank=True
+    )
+
+    cgpa = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return self.user.username
